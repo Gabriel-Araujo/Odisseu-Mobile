@@ -40,7 +40,7 @@ export default class OpenURLButton extends React.Component {
   }
 }
 
-export default class ViewSedeScreen extends React.Component {
+export default class SedeViewScreen extends React.Component {
 
   static propTypes = {
     value: React.PropTypes.string,
@@ -70,7 +70,7 @@ export default class ViewSedeScreen extends React.Component {
             <TouchableHighlight underlayColor="#FFF6E5" onPress={this.handleOpenURL.bind(this)}>
               <Image
                 resizeMode="contain"
-                source={{uri: 'http://maps.googleapis.com/maps/api/staticmap?zoom=15&scale=2&size=640x400&markers=' + this.props.sede.localizacao_gps}}
+                source={{uri: 'http://maps.googleapis.com/maps/api/staticmap?zoom=17&scale=2&size=640x400&markers=' + this.props.sede.localizacao_gps}}
                 style={styles.pictureMap}
               />
             </TouchableHighlight>
@@ -91,6 +91,7 @@ export default class ViewSedeScreen extends React.Component {
               <Text style={styles.subTitulo}>{this.props.sede.telefone}</Text>
               <Text style={styles.subTitulo}>{this.props.sede.email}</Text>
               <OpenURLButton value='Site' url={this.props.sede.url_ulisses} />
+              <Text style={styles.subTitulo}>{this.props.name}</Text>
             </View>
           </View>
         </View>

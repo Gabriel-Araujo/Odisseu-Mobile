@@ -2,12 +2,13 @@
 
 import React from 'react';
 import {
+  View,
+  Text,
   Image,
   ListView,
+  Navigator,
   StyleSheet,
-  Text,
   TouchableHighlight,
-  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import SedesListScreen from './SedesListScreen';
