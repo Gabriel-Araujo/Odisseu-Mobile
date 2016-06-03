@@ -52,9 +52,9 @@ export default class OdisseuMobile extends React.Component {
 
   checkLocalStorage() {
     AsyncStorage.getItem(STORAGE_NEAR_SEDE_KEY).then((value) => {
-        this.setState({
-          nearSedeID: value
-        });
+      this.setState({
+        nearSedeID: value
+      });
     }).done();
   }
 
@@ -70,29 +70,31 @@ export default class OdisseuMobile extends React.Component {
   }
 
   onSedesButtonPress() {
-    let sedeID = parseInt(this.state.nearSedeID);
-    if(sedeID > 0) {
-      this.fetchData(REQUEST_API_SEDES + sedeID);
+    if(this.state.nearSede.id > 0){
+      this.navigate(this.state.nearSede);
     } else {
-      this.fetchData(REQUEST_API_SEARCH_SEDES + this.state.locDevice.longitude + "," + this.state.locDevice.latitude);
-      AsyncStorage.setItem(STORAGE_NEAR_SEDE_KEY, JSON.stringify(this.state.nearSede.id));
-      this.setState({
-        nearSedeID: this.state.nearSede.id,
-      });
+      let sedeID = parseInt(this.state.nearSedeID);
+      if(sedeID > 0) {
+        this.fetchData(REQUEST_API_SEDES + sedeID);
+      } else {
+        this.fetchData(REQUEST_API_SEARCH_SEDES + this.state.locDevice.longitude + "," + this.state.locDevice.latitude);
+        AsyncStorage.setItem(STORAGE_NEAR_SEDE_KEY, JSON.stringify(this.state.nearSede.id));
+        this.setState({
+          nearSedeID: this.state.nearSede.id,
+        });
+      }
     }
-
-    //this.navigate();
   }
 
-  navigate() {
-    let sede = this.state.nearSede;
+  navigate(sede, type='Normal') {
     let name = this.state.nearSedeID;
   	this.props.navigator.push({
     	component: SedeViewScreen,
       passProps: {
         sede: sede,
         name: name,
-      }
+      },
+      type: type
     });
   }
 
@@ -149,15 +151,10 @@ export default class OdisseuMobile extends React.Component {
               <Text style={styles.sobreNA}>
                 Com o aplicativo será possivel conhecer todas as nossas sedes e seus eventos abertos para inscrição.
                 {this.state.nearSedeID}
-                {this.state.nearSede.nome}
+                {this.state.nearSede.id}
               </Text>
               <View style={{height:80}}/>
               <TouchableHighlight style={styles.button} underlayColor="#FFF6E5" onPress={() => this.onSedesButtonPress()} >
-                <View>
-                  <Text style={styles.sobreNA}><Icon name="paper-plane"/>   Encontrar a sede mais próxima</Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight style={styles.button} underlayColor="#FFF6E5" onPress={() => this.navigate()} >
                 <View>
                   <Text style={styles.sobreNA}><Icon name="paper-plane"/>   Encontrar a sede mais próxima</Text>
                 </View>
